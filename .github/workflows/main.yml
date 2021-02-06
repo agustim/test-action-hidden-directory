@@ -13,7 +13,7 @@ jobs:
           with:
             ref: main
         - name: Generate hidden directory
-          uses: agustim/action-hidden-directory@v1.1
+          uses: agustim/action-hidden-directory@v1.2
           id: hidden
           with:
             password: Secret@Super
