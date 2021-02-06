@@ -1,0 +1,32 @@
+name: main
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v1
+          with:
+            ref: main
+        - name: Build
+          run: |
+            yarn
+            yarn run build
+        - name: Generate hidden directory
+          uses: agustim/action-hidden-directory@v1.1
+          id: hidden
+          with:
+            password: Secret@Super
+        - name: Prepare Deploy
+          run: |
+            mkdir -p ./client/${{ steps.hidden.outputs.directory }}
+            cp -dpR ./out/* ./client/${{ steps.hidden.outputs.directory }}
+        - name: Deploy to gh-pages
+          uses: peaceiris/actions-gh-pages@v3
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./client
