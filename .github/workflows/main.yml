@@ -23,8 +23,8 @@ jobs:
             BASE_PATH=/test-action-hidden-directory/${{ steps.hidden.outputs.directory }} yarn run build
         - name: Prepare Deploy
           run: |
-            mkdir -p ./client/${{ steps.hidden.outputs.directory }}
-            cp -dpR ./out/* ./client/${{ steps.hidden.outputs.directory }}
+            mkdir -p ./client
+            mv ./out ./client/${{ steps.hidden.outputs.directory }}
         - name: Deploy to gh-pages
           uses: peaceiris/actions-gh-pages@v3
           with:
